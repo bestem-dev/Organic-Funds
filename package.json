@@ -1,0 +1,27 @@
+{
+  "name": "dao-hacks",
+  "version": "1.0.0",
+  "description": "A crowdfunding platform that allows an agile milestone based funding.",
+  "main": "index.js",
+  "directories": {
+    "doc": "doc",
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Eyon42/Organic.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Eyon42/Organic/issues"
+  },
+  "homepage": "https://github.com/Eyon42/Organic#readme",
+  "dependencies": {
+    "@openzeppelin/contracts": "^4.5.0"
+  }
+}
