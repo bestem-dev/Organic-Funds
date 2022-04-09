@@ -4,4 +4,4 @@ __pycache__
 .hypothesis/
 build/
 reports/
-venv/
+venv
