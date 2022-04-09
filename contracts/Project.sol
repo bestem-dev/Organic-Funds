@@ -54,20 +54,22 @@ contract Project is ERC1155 {
         token.transfer(projectOwner, milestoneAmounts[currentMilestone]);
     }
 
-    uint256[][] public nextMilestones;
-    mapping(address => mapping(uint256 => uint256))
-        public votesPerUserPerMilestone;
+    uint256[] public nextProposedMilestones;
+    uint256 public openedProposals;
+    mapping(address => mapping(uint256 => bool)) public votedOnMilestone;
+    mapping(uint256 => mapping(uint256 => uint256)) public roundToOptionToVotes;
     bool votingOpen = false;
     uint256 votingOpenTime;
+    string currentMilestoneMetadataURI;
 
     function submitMilestone(
         string memory _milestoneMetadataURI,
-        uint256 nProposals,
-        uint256[][] memory _nextMilestones,
-        string[] memory nextMilestonesURIs
+        uint256[] memory _proposedMilestones
     ) public {
-        if (nProposals > 1) {}
+        nextProposedMilestones = _proposedMilestones;
+        currentMilestoneMetadataURI = _milestoneMetadataURI;
         votingOpen = true;
+        openedProposals = _proposedMilestones.length + 1; // we add the "cease funding"
     }
 
     function vote(uint256 proposalIndex) public {
@@ -76,10 +78,15 @@ contract Project is ERC1155 {
             "You don't have enough stake to vote"
         );
         require(votingOpen, "Voting is closed");
-        votesPerUserPerMilestone[msg.sender][currentMilestone] = proposalIndex;
+        votedOnMilestone[msg.sender][currentMilestone] = true;
+        roundToOptionToVotes[currentMilestone][proposalIndex]++;
     }
 
     function closeVoting() public {
+        // count votes
+        uint256 winner;
+        for (uint256 i; i < openedProposals)
+
         votingOpen = false;
     }
 }
