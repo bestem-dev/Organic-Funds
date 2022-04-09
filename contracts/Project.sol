@@ -58,6 +58,7 @@ contract Project is ERC1155 {
     mapping(address => mapping(uint256 => uint256))
         public votesPerUserPerMilestone;
     bool votingOpen = false;
+    uint256 votingOpenTime;
 
     function submitMilestone(
         string memory _milestoneMetadataURI,
@@ -78,5 +79,7 @@ contract Project is ERC1155 {
         votesPerUserPerMilestone[msg.sender][currentMilestone] = proposalIndex;
     }
 
-    function closeVoting() public {}
+    function closeVoting() public {
+        votingOpen = false;
+    }
 }
