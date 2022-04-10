@@ -6,4 +6,4 @@ build/
 reports/
 venv
 node_modules
-.frontend/package-lock.json
+package-lock.json
