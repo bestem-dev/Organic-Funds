@@ -16,6 +16,9 @@ display:flex;
 justify-content: center;
 align-items: center;
 transition: all 0.2s ease-in-out;
+z-index:0;
+margin-top: 337px;
+margin-right:950px;
 
 &:hover{
     transition: all 0.2s ease-in-out;
