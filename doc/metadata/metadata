@@ -1,7 +1,32 @@
 {
-  "description": "Science project center in improve techniques to trait diabetes deasease.", 
-  "external_url": "https://www.microbiar.com", 
-  "image": "https://storage.googleapis.com/opensea-prod.appspot.com/puffs/3.png", 
-  "name": "Microbiar",
-  "attributes": [ ... ], 
+  "description": "Science project center in improve techniques to trait diabetes deasease.",
+  "external_url": "www.bioar.com",
+  "image": "https://ipfs.io/ipfs/QmRGMKcWiLGPhWWF6PPNCzZDaZ4Y6VMdCZXQP44NWeMyCr?filename=perro.jpg",
+  "attributes":[
+      {
+          "display_type: "number"
+          "trait_type": "Total Amount",
+          "value": "440"
+      },
+      {
+          "display_type": "number",
+          "trait_type": "Amount Founded",
+          "value": "220"
+      },
+      {
+          "display_type": "boost_percentage",
+          "trait_type" : "Milestone Progress",
+          "value": "50"
+      },
+      {
+          "display_type": "number",
+          "trait_type": "votes",
+          "value":     "1"
+      },
+      {
+         "trait_type": "status",
+         "value"  :   "active"
+      }
+      
+  ]
 }
