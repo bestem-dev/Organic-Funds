@@ -23,6 +23,7 @@ contract Project is ERC1155 {
 
     // Milestone voting vars
     uint256[][] public nextProposedMilestones;
+    string[] public nextProposedMetadata;
     uint256 public openMilestoneProposals;
     mapping(address => mapping(uint256 => bool)) public votedOnMilestone;
     mapping(uint256 => mapping(uint256 => uint256)) public roundToOptionToVotes;
@@ -77,7 +78,7 @@ contract Project is ERC1155 {
     // string currentMilestoneMetadataURI;
 
     function submitMilestone(
-        // string memory _milestoneMetadataURI,
+        string[] memory _nextProposedMetadata,
         uint256[][] memory _proposedMilestones
     ) external onlyProjectOwner {
         // TO-DO: Handle Metadata
@@ -86,6 +87,7 @@ contract Project is ERC1155 {
         // currentMilestoneMetadataURI = _milestoneMetadataURI;
         votingOpenTime = block.timestamp;
         votingOpen = true;
+        nextProposedMetadata = _nextProposedMetadata;
         openMilestoneProposals = _proposedMilestones.length + 1; // we add the "cease funding" as 0
     }
 
@@ -138,6 +140,7 @@ contract Project is ERC1155 {
         if (winner == 0) {
             active = false;
         } else {
+            _setURI(nextProposedMetadata[winner - 1]);
             milestoneAmounts = nextProposedMilestones[winner - 1];
         }
         return winner;

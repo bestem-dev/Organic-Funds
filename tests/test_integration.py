@@ -56,9 +56,10 @@ def test_start_work(project, mock_token, projectOwner):
 
 
 def test_submit_work(project, projectOwner):
-    project.submitMilestone([
-        [10e18, 20e18, 30e18, 40e18],
-        [10e18, 5e18, 20e18, 30e18, 40e18]],
+    project.submitMilestone(
+        ["default", "Add intermediate goal"],
+        [[10e18, 20e18, 30e18, 40e18],
+         [10e18, 5e18, 20e18, 30e18, 40e18]],
         {"from": projectOwner})
 
     assert project.votingOpen()
@@ -81,9 +82,10 @@ def test_vote(project, users, projectOwner):
 
 def test_start_last_milestone(project, users, projectOwner):
     project.withdrawMilestoneFunds({"from": projectOwner})
-    project.submitMilestone([
-        [10e18, 5e18, 40e18, 60e18, 100e18]  # They get greedy, all or nothing
-    ],
+    project.submitMilestone(
+        ["I want it all"],
+        # They get greedy, all or nothing
+        [[10e18, 5e18, 40e18, 60e18, 100e18]],
         {"from": projectOwner})
 
     votes = [0, 0, 0, 1, 1, 0, 0, 0, 0]  # 0 wins
