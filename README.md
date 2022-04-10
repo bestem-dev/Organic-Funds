@@ -10,13 +10,9 @@ This project is a milestone based crowdfunding platform where teams can propose 
 Users can choose to fund a project. Once a project proposal gathers enough funds, the fraction of the funds corresponding to the first milestone is released. When work is done, the team can submit the milestone along with proposals for a new roadmap. Then the users that funded the project vote to continue on one of the proposed roadmaps or to terminate the funding and redistribute the remaining funds among users proportionally to initial contribution.
 
 Setup
-
-´´´
-python3 -m venv venv
-
-source venv/bin/activate
-
-pip install -r requirements.txt
-
-brownie test
-´´´
+```
+$ python3 -m venv venv
+$ source venv/bin/activate
+$ pip install -r requirements.txt
+$ brownie test
+```
