@@ -8,7 +8,7 @@ export const HeroContainer = styled.div`
     justify-content: center;
     align-items: center;
     padding: 0 38px;
-    height 500px;
+    height 557px;
     position: relative;
     z-index: 1
     
@@ -78,4 +78,15 @@ export const ArrowRight = styled(MdArrowRight)`
 
 export const HeroContent = styled.div `
     color: white;
+`
+
+export const ImgWrap = styled.div `
+    max-width: 555px;
+    heigth: 100%
+`
+
+export const Img = styled.img`
+    width:100%;
+    margin: 0 0 10px 0;
+    padding-right: 0;
 `

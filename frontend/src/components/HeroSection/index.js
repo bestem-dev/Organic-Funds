@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { Button } from "../buttonElements";
-import { ArrowForward, ArrowRight, HeroBg, HeroBtnWrapper, HeroContainer, HeroH1, Imagep,HeroContent} from "./HeroElements";
-
-
+import { ArrowForward, ArrowRight, HeroBg, HeroBtnWrapper, HeroContainer, Imagep,HeroContent} from "./HeroElements";
+import imagenes from '../HeroSection/imagenes';
 
 const HeroSection = () => {
 
@@ -16,13 +15,11 @@ const HeroSection = () => {
     return(
         <HeroContainer>
             <HeroBg>
-                <Imagep>
-                 
-                </Imagep>
+                    <img src={imagenes.img1} id="img" />
             </HeroBg>
             <HeroContent>
             <HeroBtnWrapper>
-            <Button to='product' onMouseEnter={onHover} onMouseLeave={onHover} 
+            <Button to="Product" onMouseEnter={onHover} onMouseLeave={onHover} 
             primary='true'
             dark='true'
             >Product {hover ? <ArrowForward /> : <ArrowRight />}</Button>
