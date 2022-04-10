@@ -7,16 +7,36 @@ import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 contract Project is ERC1155 {
+    // Constants
     uint256 public constant PROJECT = 0;
     uint256 public constant TOKEN = 1;
     uint256 public minContribution = 1;
+    uint256 public votingTime = 10000; //10 * 24 * 3600 * 1000; // Ten days
+    address public whitelistedFundingToken;
+    address public projectOwner;
 
-    address private whitelistedFundingToken;
-
+    // Global State
     uint256[] public milestoneAmounts;
     uint256 public currentMilestone = 0;
+    bool public active = true;
+    uint256 public tokenSupply;
 
-    address public projectOwner;
+    // Milestone voting vars
+    uint256[][] public nextProposedMilestones;
+    uint256 public openMilestoneProposals;
+    mapping(address => mapping(uint256 => bool)) public votedOnMilestone;
+    mapping(uint256 => mapping(uint256 => uint256)) public roundToOptionToVotes;
+    bool public votingOpen = false;
+    uint256 public votingOpenTime;
+
+    modifier onlyActive() {
+        require(active, "Funding campaign is inactive");
+        _;
+    }
+    modifier onlyProjectOwner() {
+        require(msg.sender == projectOwner, "Only project owner");
+        _;
+    }
 
     constructor(
         string memory _metadata,
@@ -30,7 +50,7 @@ contract Project is ERC1155 {
         _mint(_owner, PROJECT, 1, "");
     }
 
-    function fund(uint256 _amount) external {
+    function fund(uint256 _amount) external onlyActive {
         IERC20 token = IERC20(whitelistedFundingToken);
         require(
             token.allowance(msg.sender, address(this)) >= _amount,
@@ -39,54 +59,113 @@ contract Project is ERC1155 {
         require(_amount > minContribution, "Contributed less than minimum");
 
         token.transferFrom(msg.sender, address(this), _amount);
+        tokenSupply = tokenSupply + _amount; // add this to built in method
         _mint(msg.sender, TOKEN, _amount, ""); // Our approve token will be a stable coin for the MVP
     }
 
-    function withdrawMilestoneFunds() public {
+    function withdrawMilestoneFunds() external onlyProjectOwner {
         require(votingOpen == false, "Voting is still open");
         IERC20 token = IERC20(whitelistedFundingToken);
         require(
             token.balanceOf(address(this)) > milestoneAmounts[currentMilestone],
             "Milestone not reached"
         );
-        currentMilestone++;
 
         token.transfer(projectOwner, milestoneAmounts[currentMilestone]);
     }
 
-    uint256[] public nextProposedMilestones;
-    uint256 public openedProposals;
-    mapping(address => mapping(uint256 => bool)) public votedOnMilestone;
-    mapping(uint256 => mapping(uint256 => uint256)) public roundToOptionToVotes;
-    bool votingOpen = false;
-    uint256 votingOpenTime;
-    string currentMilestoneMetadataURI;
+    // string currentMilestoneMetadataURI;
 
     function submitMilestone(
-        string memory _milestoneMetadataURI,
-        uint256[] memory _proposedMilestones
-    ) public {
-        nextProposedMilestones = _proposedMilestones;
-        currentMilestoneMetadataURI = _milestoneMetadataURI;
+        // string memory _milestoneMetadataURI,
+        uint256[][] memory _proposedMilestones
+    ) external onlyProjectOwner {
+        // TO-DO: Handle Metadata
+        // For now we only handle the immediate next milestone
+        nextProposedMilestones = _proposedMilestones; // We are not checking if previous milestones were modified. Should we?
+        // currentMilestoneMetadataURI = _milestoneMetadataURI;
+        votingOpenTime = block.timestamp;
         votingOpen = true;
-        openedProposals = _proposedMilestones.length + 1; // we add the "cease funding"
+        openMilestoneProposals = _proposedMilestones.length + 1; // we add the "cease funding" as 0
     }
 
     function vote(uint256 proposalIndex) public {
+        require(votingOpen, "Voting is closed");
+        require(
+            votedOnMilestone[msg.sender][currentMilestone] == false,
+            "You've already voted on this"
+        );
+        require(
+            block.timestamp < votingOpenTime + votingTime,
+            "Voting time is over"
+        );
         require(
             balanceOf(msg.sender, TOKEN) > minContribution,
             "You don't have enough stake to vote"
         );
-        require(votingOpen, "Voting is closed");
         votedOnMilestone[msg.sender][currentMilestone] = true;
         roundToOptionToVotes[currentMilestone][proposalIndex]++;
     }
 
-    function closeVoting() public {
+    function getRoundVote(uint256 round, uint256 proposalIndex)
+        public
+        view
+        returns (uint256)
+    {
+        return roundToOptionToVotes[round][proposalIndex];
+    }
+
+    function closeVoting() public onlyProjectOwner returns (uint256) {
+        // require(
+        //     block.timestamp > votingOpenTime + votingTime,
+        //     "Voting time not is over"
+        // );
         // count votes
         uint256 winner;
-        for (uint256 i; i < openedProposals)
+        uint256 maxVotes;
+        for (uint256 i; i < openMilestoneProposals; i++) {
+            uint256 votes = roundToOptionToVotes[currentMilestone][i];
+            if (votes >= maxVotes) {
+                // Terminate is 0, so in a Tie between 0 and other option, the other option wins
+                winner = i;
+                maxVotes = votes;
+            }
+        }
 
         votingOpen = false;
+        currentMilestone++;
+
+        if (winner == 0) {
+            active = false;
+        } else {
+            milestoneAmounts = nextProposedMilestones[winner - 1];
+        }
+        return winner;
+    }
+
+    function withdraw()
+        public
+        returns (
+            uint256,
+            uint256,
+            uint256,
+            uint256
+        )
+    {
+        require(active == false, "Only available after financing ends");
+        IERC20 token = IERC20(whitelistedFundingToken);
+        uint256 balance = balanceOf(msg.sender, TOKEN);
+        require(balance > 0, "You don't own a stake in this project");
+
+        uint256 oldTS = tokenSupply;
+        uint256 oldBal = token.balanceOf(address(this));
+
+        uint256 portion = (balance * token.balanceOf(address(this))) /
+            tokenSupply;
+
+        tokenSupply = tokenSupply - balance; // add this to built in method
+        _burn(msg.sender, TOKEN, balance);
+        token.transfer(msg.sender, portion);
+        return (portion, balance, oldTS, oldBal);
     }
 }
