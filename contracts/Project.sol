@@ -64,6 +64,15 @@ contract Project is ERC1155 {
         _mint(msg.sender, TOKEN, _amount, ""); // Our approve token will be a stable coin for the MVP
     }
 
+    function fundStream(uint256 _amount) external onlyActive {
+        // TO-DO:
+        // - figure out how to make Native ERC1155 superToken
+        //   creating a flow in pure solidity
+        // - Start flow from user to contract of erc20 token
+        // - Start from from contract to user of erc1155 token
+        return;
+    }
+
     function withdrawMilestoneFunds() external onlyProjectOwner {
         require(votingOpen == false, "Voting is still open");
         IERC20 token = IERC20(whitelistedFundingToken);
