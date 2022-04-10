@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Button } from "../buttonElements";
-import { HeroBg, HeroContainer, HeroBtnWrapper, HeroContent } from "./HeroElements";
+import { ArrowForward, ArrowRight, HeroBg, HeroBtnWrapper, HeroContainer, HeroH1, Imagep,HeroContent} from "./HeroElements";
+
 
 
 const HeroSection = () => {
@@ -15,15 +16,19 @@ const HeroSection = () => {
     return(
         <HeroContainer>
             <HeroBg>
-                <Image />
+                <Imagep>
+                 
+                </Imagep>
             </HeroBg>
             <HeroContent>
-                <Heroh1>hola</Heroh1>
+                <HeroH1>
+                    Product
+                </HeroH1>
             <HeroBtnWrapper>
             <Button to="Product" onMouseEnter={onHover} onMouseLeave={onHover} 
             primary="true"
             dark='true'
-            >Product</Button>
+            >Product {hover ?<ArrowForward /> : <ArrowRight />}</Button>
             </HeroBtnWrapper>
             </HeroContent>
         </HeroContainer>
