@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import ArrowForward from 'react-icons';
+import { MdArrowForward, MdArrowRight } from 'react-icons/md';
 
 
 export const HeroContainer = styled.div`
@@ -35,13 +35,28 @@ export const HeroBg = styled.div`
     overflow: hidden;
 `
 
-export const Imagep =  styled.image`
+export const Imagep =  styled.img`
     width: 100%;
     heigth: 100%;
     -o-object-fit:cover;
     object-fit: cover;
     background: grey;
 `
+
+export const HeroH1 = styled.h1`
+    color:#fff;
+    font-size: 48px;
+    text-align: center;
+
+    @media screen and (max-width: 760px){
+        font-size:40px;
+    }
+    @media screen and (max-width: 480px){
+        font-size: 32px;
+    }
+
+    `
+
 export const HeroBtnWrapper = styled.div`
     margin-top: 32px;
     display:flex;
@@ -50,7 +65,15 @@ export const HeroBtnWrapper = styled.div`
 
 `
 
-export const ArrowForward = styled(ArrowForward)`
+export const ArrowForward = styled(MdArrowForward)`
     margin-left: 8px;
     font-size:20px;
-`   
+`  
+export const ArrowRight = styled(MdArrowRight)`
+    margin-left: 8px;
+    font-size:20px;
+`
+
+export const HeroContent = styled.div `
+    color: white;
+`
