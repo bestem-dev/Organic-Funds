@@ -22,10 +22,10 @@ const HeroSection = () => {
             </HeroBg>
             <HeroContent>
             <HeroBtnWrapper>
-            <Button to="Product" onMouseEnter={onHover} onMouseLeave={onHover} 
-            primary="true"
+            <Button to='product' onMouseEnter={onHover} onMouseLeave={onHover} 
+            primary='true'
             dark='true'
-            >Product {hover ?<ArrowForward /> : <ArrowRight />}</Button>
+            >Product {hover ? <ArrowForward /> : <ArrowRight />}</Button>
             </HeroBtnWrapper>
             </HeroContent>
         </HeroContainer>
