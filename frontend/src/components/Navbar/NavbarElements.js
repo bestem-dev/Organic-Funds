@@ -3,7 +3,6 @@ import {Link as LinkR} from 'react-router-dom';
 import {Link as LinkS } from 'react-scroll';
 
 export const Nav = styled.nav`
-    background: #272F3C;
     height: 80px;
     margin-top:-10px;
     display:flex;
@@ -11,7 +10,9 @@ export const Nav = styled.nav`
     font-size: 1rem;
     position: sticky;
     top:0;
-    z-index:10;
+    background-color: rgb(236, 236, 236);;
+    z-index:1;
+    transition: 0.8s all ease;
 
     @media screen and (max-width: 960px){
         transition: 0.8s all ease;
@@ -29,7 +30,6 @@ export const NavbarContainer = styled.div`
 `;	
 
 export const NavLogo = styled(LinkR)`
-    color: #fff;
     justify-self: flex-start;
     cursor: pointer;
     font-size: 1.5rem;
@@ -38,6 +38,7 @@ export const NavLogo = styled(LinkR)`
     margin-left: 24px;
     font-weight: bold;
     text-decoration: none;
+    
 `;
 
 export const MobileIcon = styled.div`
@@ -51,7 +52,6 @@ export const MobileIcon = styled.div`
         transform: translate(-100%, 60%):
         font-size: 1.8rem;
         cursor: pointer;
-        color: #fff;
     }
     `
     export const NavMenu = styled.ul`
@@ -75,13 +75,6 @@ export const MobileIcon = styled.div`
         display: flex;
         align-items: center;
         text-decoration: none;
-        padding: 0 1rem;
-        height: 100%;
-        cursor: pointer;
-
-        &.active{
-            border-bottom:3px solid #01bf71;
-        }
     `;
 
     export const NavBtn = styled.nav`
@@ -95,20 +88,23 @@ export const MobileIcon = styled.div`
 
     export const NavBtnLink = styled(LinkR)`
         border-radius: 50px;
-        background: #01bf71;
         white-space: nowrap;
         padding: 10px 22px;
-        color: #010606;
+        color:  #01bf71;
         font-size: 16px;
         outline:none;
-        border: none;
         cursor: pointer;
         transition: all 0.2s ease-in-out;
         text-decoration: none;
+        background-color: white;
+        border: #01bf71 1px solid;
+        
 
         &:hover{
             transition: all 0.2s ease-in-out;
-            background: #fff;
-            color: #010606;
+            background: #01bf71;
+            color: white;
+            border: white 2px solid;
         }
-    `;
+    `
+            	
