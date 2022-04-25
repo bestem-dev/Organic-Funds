@@ -6,8 +6,6 @@ import {useState} from "react";
 import nav from "./nav.css";
 
 const Navbar = ({toggle }) =>{
-    const Navbar = ({toggle }) =>{
-
     
   const [isConnected, setIsConnected]= useState(false)
   const [walletAddress, setWallet] = useState('')
