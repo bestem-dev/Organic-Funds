@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import Navbar from "../components/Navbar";
 import HeroSection from "../components/HeroSection";
+import Cards from '../components/Cards/Cards';
 
 const Home = () => {
 
@@ -15,6 +16,7 @@ const Home = () => {
         <>
         <Navbar toggle={toggle} />
         <HeroSection />
+        <Cards />
         </>
     );
 };

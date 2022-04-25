@@ -1,0 +1,43 @@
+#section__title{
+
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    padding-top: 30px;
+}
+#section__title h1{
+    border-bottom: #01bf71 2px solid;
+}
+.card__content{
+    background-color: rgb(236, 236, 236);
+    box-shadow: 15px 15px 30px #bebebe,
+    -15px -15px 30px #ffffff;
+    height: auto;
+}
+#button1{
+ background-color: rgba(255, 255, 255, 0);
+ color: rgb(0, 0, 0);
+ border: black 1px solid;
+ margin-bottom: 20px;
+}
+
+a{
+    color: #01bf71;
+}
+.card__content span{
+    color: rgb(70, 70, 70);
+}
+span, p{
+    color:rgb(70, 70, 70);
+    justify-content: center;
+    text-align: justify;
+    width: 80%;
+}
+#strong{
+    color: black;
+}
+#title__dos{
+    color: black;
+    font-weight:lighter;
+    
+}
