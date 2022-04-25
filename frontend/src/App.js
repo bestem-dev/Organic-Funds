@@ -1,9 +1,9 @@
 import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
-import Home from './Pages/index';
-import Contenido from './Pages/contenido';
-import Voting from './Pages/Voting';
+import Home from './pages/index';
+import Contenido from './pages/contenido';
+import Voting from './pages/Voting';
 
 
 function App() {
